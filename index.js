@@ -1,7 +1,7 @@
 "use strict";
 
 ///////////////////////////////////////
-// Modal window
+// Modal window - open and close function ///////////////////////////////////////////////////////////
 
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
@@ -29,3 +29,21 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+/////////////////////////////////////////////////////////////////////////////////////////
+const allSections = document.querySelectorAll(".section");
+const header = document.querySelector(".header");
+
+// Creating and inserting cookies message
+const message = document.createElement("div");
+
+message.classList.add("cookie-message");
+message.innerHTML = `We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>`;
+header.append(message);
+
+// Delete cookies message
+document
+  .querySelector(".btn--close-cookie")
+  .addEventListener("click", function () {
+    message.remove();
+  });
