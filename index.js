@@ -39,7 +39,7 @@ const message = document.createElement("div");
 
 message.classList.add("cookie-message");
 message.innerHTML = `We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>`;
-header.append(message);
+header.after(message);
 
 // Delete cookies message
 document
@@ -47,3 +47,19 @@ document
   .addEventListener("click", function () {
     message.remove();
   });
+
+// Style cookies message
+message.style.backgroundColor = "#37383d";
+message.style.width = "120%";
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
+
+// Smooth scrolling to the section
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+btnScrollTo.addEventListener("click", function (e) {
+  //Scrolling
+  section1.scrollIntoView({ behavior: "smooth" });
+});
