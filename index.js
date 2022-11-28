@@ -9,6 +9,24 @@ const allSections = document.querySelectorAll(".section");
 const header = document.querySelector(".header");
 const btnScrollTo = document.querySelector(".btn--scroll-to");
 const section1 = document.querySelector("#section--1");
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+///////////////////-----Page navigation------/////////////////////////
+//Event delegation
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  //Matching strategy
+  if (e.target.classList.contains("nav__link")) {
+    const id = e.target.getAttribute("href");
+    console.log(id);
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+  }
+});
 
 ///////////////////////-----Scrolling to first section-----////////////////////////////////////
 // Smooth scrolling to the section
@@ -64,19 +82,24 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////-------Tabbed Component--------/////////////////////////////////
+tabsContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab");
 
-///////////////////-----Page navigation------/////////////////////////
-//Event delegation
-// 1. Add event listener to common parent element
-// 2. Determine what element originated the event
-document.querySelector(".nav__links").addEventListener("click", function (e) {
-  e.preventDefault();
+  //Guard clause (if clicked is null => finish the function immediately)
+  if (!clicked) return;
 
-  //Matching strategy
-  if (e.target.classList.contains("nav__link")) {
-    const id = e.target.getAttribute("href");
-    console.log(id);
-    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
-  }
+  //first: remove active classes for all btns and contents
+  tabs.forEach((t) => t.classList.remove("operations__tab--active"));
+  tabsContent.forEach((c) => c.classList.remove("operations__content--active"));
+  //second: add active classes for clicked btn and related content(below)
+  clicked.classList.add("operations__tab--active");
+
+  // Activate content area
+  // each btns has an attribute data-tab="from 1 to 3"
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
 });
+
+/////////////////////////////////////////////////////////////////
